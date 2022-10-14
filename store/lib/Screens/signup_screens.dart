@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class SignIn extends StatelessWidget {
   const SignIn({super.key});
@@ -29,7 +30,8 @@ class SignInScreen extends StatefulWidget {
 class _SignInScreenState extends State<SignInScreen> {
   TextEditingController emailFeild = TextEditingController();
   TextEditingController passwordFeild = TextEditingController();
-  TextEditingController conformPasswordFeild = TextEditingController();
+  TextEditingController phoneFeild = TextEditingController();
+  TextEditingController userNameFeild = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -73,11 +75,10 @@ class _SignInScreenState extends State<SignInScreen> {
                 ),
                 hoverColor: Color.fromARGB(255, 255, 255, 255)),
             keyboardType: TextInputType.emailAddress,
-            onFieldSubmitted: (emailFeild) {},
           ),
           TextFormField(
             //To take the input when it login
-
+            controller: userNameFeild,
             style: TextStyle(color: Colors.white),
             decoration: InputDecoration(
                 enabledBorder: OutlineInputBorder(
@@ -97,11 +98,10 @@ class _SignInScreenState extends State<SignInScreen> {
                 ),
                 hoverColor: Color.fromARGB(255, 255, 255, 255)),
             keyboardType: TextInputType.emailAddress,
-            onFieldSubmitted: (emailFeild) {},
           ),
           TextFormField(
             //To take the input when it login
-
+            controller: passwordFeild,
             style: TextStyle(color: Colors.white),
             decoration: InputDecoration(
                 enabledBorder: OutlineInputBorder(
@@ -111,7 +111,7 @@ class _SignInScreenState extends State<SignInScreen> {
                   ),
                   borderRadius: BorderRadius.circular(25.0),
                 ),
-                labelText: "User Name ",
+                labelText: "Password ",
                 labelStyle:
                     TextStyle(color: Color.fromARGB(213, 255, 255, 255)),
                 border: OutlineInputBorder(),
@@ -121,11 +121,10 @@ class _SignInScreenState extends State<SignInScreen> {
                 ),
                 hoverColor: Color.fromARGB(255, 255, 255, 255)),
             keyboardType: TextInputType.emailAddress,
-            onFieldSubmitted: (emailFeild) {},
           ),
           TextFormField(
             //To take the input when it login
-
+            controller: phoneFeild,
             style: TextStyle(color: Colors.white),
             decoration: InputDecoration(
                 enabledBorder: OutlineInputBorder(
@@ -135,7 +134,7 @@ class _SignInScreenState extends State<SignInScreen> {
                   ),
                   borderRadius: BorderRadius.circular(25.0),
                 ),
-                labelText: "User Name ",
+                labelText: "Phone Number",
                 labelStyle:
                     TextStyle(color: Color.fromARGB(213, 255, 255, 255)),
                 border: OutlineInputBorder(),
@@ -144,8 +143,7 @@ class _SignInScreenState extends State<SignInScreen> {
                   color: Colors.white,
                 ),
                 hoverColor: Color.fromARGB(255, 255, 255, 255)),
-            keyboardType: TextInputType.emailAddress,
-            onFieldSubmitted: (emailFeild) {},
+            keyboardType: TextInputType.phone,
           ),
           Container(
             width: 200,
@@ -154,7 +152,7 @@ class _SignInScreenState extends State<SignInScreen> {
             child: MaterialButton(
               onPressed: () {},
               child: Text(
-                "Login",
+                "Sign Up",
                 style: TextStyle(
                     color: Color.fromARGB(255, 255, 255, 255),
                     fontSize: 20,
