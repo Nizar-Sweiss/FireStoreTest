@@ -4,10 +4,16 @@ import 'package:firebase_core/firebase_core.dart';
 
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:store/Screens/screens.dart';
 
-class SignIn extends StatelessWidget {
+class SignIn extends StatefulWidget {
   const SignIn({super.key});
 
+  @override
+  State<SignIn> createState() => _SignInState();
+}
+
+class _SignInState extends State<SignIn> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -37,135 +43,135 @@ class _SignInScreenState extends State<SignInScreen> {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.all(12),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          BackdropFilter(
-            filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-            child: Container(
-                margin: EdgeInsets.only(top: 20, bottom: 170),
+      child: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            BackdropFilter(
+              filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+              child: Container(
+                  margin: EdgeInsets.only(top: 20, bottom: 170),
+                  child: Text(
+                    "Sign Up",
+                    style: TextStyle(fontSize: 100, fontFamily: 'ZenTokyoZoo'),
+                  )),
+            ),
+            TextFormField(
+              //To take the input when it login
+              controller: emailFeild,
+
+              style: TextStyle(),
+              decoration: InputDecoration(
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Color.fromARGB(255, 255, 255, 255),
+                      width: 1,
+                    ),
+                    borderRadius: BorderRadius.circular(25.0),
+                  ),
+                  labelText: "Email ",
+                  labelStyle:
+                      TextStyle(color: Color.fromARGB(213, 255, 255, 255)),
+                  border: OutlineInputBorder(),
+                  prefixIcon: Icon(
+                    Icons.email,
+                  ),
+                  hoverColor: Color.fromARGB(255, 255, 255, 255)),
+              keyboardType: TextInputType.emailAddress,
+            ),
+            TextFormField(
+              //To take the input when it login
+              controller: nameFeild,
+              style: TextStyle(),
+              decoration: InputDecoration(
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Color.fromARGB(255, 255, 255, 255),
+                      width: 1,
+                    ),
+                    borderRadius: BorderRadius.circular(25.0),
+                  ),
+                  labelText: "User Name ",
+                  labelStyle:
+                      TextStyle(color: Color.fromARGB(213, 255, 255, 255)),
+                  border: OutlineInputBorder(),
+                  prefixIcon: Icon(
+                    Icons.person,
+                  ),
+                  hoverColor: Color.fromARGB(255, 255, 255, 255)),
+              keyboardType: TextInputType.emailAddress,
+            ),
+            TextFormField(
+              //To take the input when it login
+              controller: passwordFeild,
+
+              decoration: InputDecoration(
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Color.fromARGB(255, 255, 255, 255),
+                      width: 1,
+                    ),
+                    borderRadius: BorderRadius.circular(25.0),
+                  ),
+                  labelText: "Password ",
+                  labelStyle:
+                      TextStyle(color: Color.fromARGB(213, 255, 255, 255)),
+                  border: OutlineInputBorder(),
+                  prefixIcon: Icon(
+                    Icons.person,
+                  ),
+                  hoverColor: Color.fromARGB(255, 255, 255, 255)),
+              keyboardType: TextInputType.emailAddress,
+            ),
+            TextFormField(
+              //To take the input when it login
+              controller: phoneFeild,
+
+              decoration: InputDecoration(
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Color.fromARGB(255, 255, 255, 255),
+                      width: 1,
+                    ),
+                    borderRadius: BorderRadius.circular(25.0),
+                  ),
+                  labelText: "Phone Number",
+                  labelStyle:
+                      TextStyle(color: Color.fromARGB(213, 255, 255, 255)),
+                  border: OutlineInputBorder(),
+                  prefixIcon: Icon(
+                    Icons.person,
+                  ),
+                  hoverColor: Color.fromARGB(255, 255, 255, 255)),
+              keyboardType: TextInputType.phone,
+            ),
+            Container(
+              width: 200,
+              height: 50,
+              color: Color.fromARGB(255, 113, 33, 134),
+              child: MaterialButton(
+                onPressed: () {
+                  final name = nameFeild.text;
+                  final email = emailFeild.text;
+                  final password = passwordFeild.text;
+                  final phone = phoneFeild.text;
+                  signUpUserToFireStore(
+                      userName: name,
+                      userEmail: email,
+                      userPassword: password,
+                      userPhone: phone);
+                },
                 child: Text(
                   "Sign Up",
                   style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 100,
-                      fontFamily: 'ZenTokyoZoo'),
-                )),
-          ),
-          TextFormField(
-            //To take the input when it login
-            controller: emailFeild,
-
-            style: TextStyle(color: Colors.white),
-            decoration: InputDecoration(
-                enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(
-                    color: Color.fromARGB(255, 255, 255, 255),
-                    width: 1,
-                  ),
-                  borderRadius: BorderRadius.circular(25.0),
+                      color: Color.fromARGB(255, 255, 255, 255),
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold),
                 ),
-                labelText: "Email ",
-                labelStyle:
-                    TextStyle(color: Color.fromARGB(213, 255, 255, 255)),
-                border: OutlineInputBorder(),
-                prefixIcon: Icon(
-                  Icons.email,
-                  color: Colors.white,
-                ),
-                hoverColor: Color.fromARGB(255, 255, 255, 255)),
-            keyboardType: TextInputType.emailAddress,
-          ),
-          TextFormField(
-            //To take the input when it login
-            controller: nameFeild,
-            style: TextStyle(color: Colors.white),
-            decoration: InputDecoration(
-                enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(
-                    color: Color.fromARGB(255, 255, 255, 255),
-                    width: 1,
-                  ),
-                  borderRadius: BorderRadius.circular(25.0),
-                ),
-                labelText: "User Name ",
-                labelStyle:
-                    TextStyle(color: Color.fromARGB(213, 255, 255, 255)),
-                border: OutlineInputBorder(),
-                prefixIcon: Icon(
-                  Icons.person,
-                  color: Colors.white,
-                ),
-                hoverColor: Color.fromARGB(255, 255, 255, 255)),
-            keyboardType: TextInputType.emailAddress,
-          ),
-          TextFormField(
-            //To take the input when it login
-            controller: passwordFeild,
-            style: TextStyle(color: Colors.white),
-            decoration: InputDecoration(
-                enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(
-                    color: Color.fromARGB(255, 255, 255, 255),
-                    width: 1,
-                  ),
-                  borderRadius: BorderRadius.circular(25.0),
-                ),
-                labelText: "Password ",
-                labelStyle:
-                    TextStyle(color: Color.fromARGB(213, 255, 255, 255)),
-                border: OutlineInputBorder(),
-                prefixIcon: Icon(
-                  Icons.person,
-                  color: Colors.white,
-                ),
-                hoverColor: Color.fromARGB(255, 255, 255, 255)),
-            keyboardType: TextInputType.emailAddress,
-          ),
-          TextFormField(
-            //To take the input when it login
-            controller: phoneFeild,
-            style: TextStyle(color: Colors.white),
-            decoration: InputDecoration(
-                enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(
-                    color: Color.fromARGB(255, 255, 255, 255),
-                    width: 1,
-                  ),
-                  borderRadius: BorderRadius.circular(25.0),
-                ),
-                labelText: "Phone Number",
-                labelStyle:
-                    TextStyle(color: Color.fromARGB(213, 255, 255, 255)),
-                border: OutlineInputBorder(),
-                prefixIcon: Icon(
-                  Icons.person,
-                  color: Colors.white,
-                ),
-                hoverColor: Color.fromARGB(255, 255, 255, 255)),
-            keyboardType: TextInputType.phone,
-          ),
-          Container(
-            width: 200,
-            height: 50,
-            color: Color.fromARGB(255, 113, 33, 134),
-            child: MaterialButton(
-              onPressed: () {
-                final name = nameFeild.text;
-                final email = emailFeild.text;
-                final password = passwordFeild.text;
-                final phone = phoneFeild.text;
-              },
-              child: Text(
-                "Sign Up",
-                style: TextStyle(
-                    color: Color.fromARGB(255, 255, 255, 255),
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
