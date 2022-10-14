@@ -31,7 +31,7 @@ class _SignInScreenState extends State<SignInScreen> {
   TextEditingController emailFeild = TextEditingController();
   TextEditingController passwordFeild = TextEditingController();
   TextEditingController phoneFeild = TextEditingController();
-  TextEditingController userNameFeild = TextEditingController();
+  TextEditingController nameFeild = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -78,7 +78,7 @@ class _SignInScreenState extends State<SignInScreen> {
           ),
           TextFormField(
             //To take the input when it login
-            controller: userNameFeild,
+            controller: nameFeild,
             style: TextStyle(color: Colors.white),
             decoration: InputDecoration(
                 enabledBorder: OutlineInputBorder(
@@ -150,7 +150,12 @@ class _SignInScreenState extends State<SignInScreen> {
             height: 50,
             color: Color.fromARGB(255, 113, 33, 134),
             child: MaterialButton(
-              onPressed: () {},
+              onPressed: () {
+                final name = nameFeild.text;
+                final email = emailFeild.text;
+                final password = passwordFeild.text;
+                final phone = phoneFeild.text;
+              },
               child: Text(
                 "Sign Up",
                 style: TextStyle(
@@ -164,4 +169,23 @@ class _SignInScreenState extends State<SignInScreen> {
       ),
     );
   }
+}
+
+Future signUpUserToFireStore(
+    {required String userName,
+    required String userEmail,
+    required String userPassword,
+    required String userPhone}) async {
+  //Reference to the docs
+  final docUser = FirebaseFirestore.instance.collection("users").doc("test-id");
+
+  final json = {
+    "name": userName,
+    "email": userEmail,
+    "password": userPassword,
+    "phone": userPhone
+  };
+
+  //Create doc and write data to Firebase
+  await docUser.set(json);
 }
